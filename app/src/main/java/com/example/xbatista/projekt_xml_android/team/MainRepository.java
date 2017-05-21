@@ -54,4 +54,38 @@ public class MainRepository {
         }
     }
 
+    public Team getById(long id) {
+        SQLiteDatabase db = mainOpenHelper.getReadableDatabase();
+        try{
+            Cursor c = db.query(Team.TABLE,
+                    null,
+                    Team.ID + " = " + id,
+                    null,
+                    null,
+                    null,
+                    null
+
+            );
+            try {
+                if (c.moveToNext())
+                    return new Team(c);
+
+                throw new IllegalArgumentException("Id is not a valid number");
+            } finally {
+                db.close();
+            }
+        } finally {
+            db.close();
+        }
+    }
+    public int update(Team team){
+        SQLiteDatabase db = mainOpenHelper.getWritableDatabase();
+        try {
+            return db.update(Team.TABLE, team.values, Team.ID + " = " + team.getId(), null); //vraci mi to id insertu
+        } finally {
+            db.close();
+        }
+
+    }
+
 }

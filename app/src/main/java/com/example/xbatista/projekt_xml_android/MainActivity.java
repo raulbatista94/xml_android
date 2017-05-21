@@ -1,8 +1,14 @@
 package com.example.xbatista.projekt_xml_android;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.xbatista.projekt_xml_android.team.MainRepository;
@@ -17,22 +23,32 @@ public class MainActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_main);
-
-        repository = new MainRepository(this);
+        //setContentView(R.layout.team_row);
 
 
-        int r = (int) (Math.random() * 100);
-        Team team = new Team("Janko");
-
-        repository.insert(team);
-        Toast.makeText(this, "Teams" + repository.findAllTeams().size(), Toast.LENGTH_SHORT).show();
 
     //LIST VIEW
         setListAdapter(new TeamAdapter(this));
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflanter = getMenuInflater();
+        inflanter.inflate(R.menu.add_menu, menu);
+        return true;
+    }
 
+        public void addTeam(MenuItem item){
+            Intent i = new Intent(this, CreateTeam.class);
+            startActivity(i);
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        Intent i = new Intent(this, TeamActivity.class);
+        i.putExtra(TeamActivity.EXTRA_TEAM_ID,id);
+        startActivity(i);
+    }
 
 
     @Override

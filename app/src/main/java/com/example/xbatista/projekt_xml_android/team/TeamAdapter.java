@@ -62,7 +62,7 @@ public class TeamAdapter extends CursorAdapter{
         Team team = new Team(cursor);
         ViewHolder viewHolder = (ViewHolder) view.getTag(); // vytahujem z ukazatela
 
-        viewHolder.name.setText(team.getName());
+        viewHolder.name.setText(team.getName() + team.getId());
         viewHolder.score.setText(String.valueOf(team.getScore()));
 
     }
