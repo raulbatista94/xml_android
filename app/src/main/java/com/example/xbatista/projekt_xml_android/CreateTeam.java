@@ -26,7 +26,6 @@ import com.example.xbatista.projekt_xml_android.team.Team;
 public class CreateTeam extends Activity {
 
     private EditText name;
-    private Button save;
     private Team team;
 
     public static final String EXTRA_ID = "cz.mendelu.xbatista.projekt_xml.createTeam.teamID";
@@ -39,7 +38,7 @@ public class CreateTeam extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_activity);
         name = (EditText) findViewById(R.id.create_name);
-        save = (Button) findViewById(R.id.save);
+
         //save.setOnClickListener(btnClickListener);
 
         repository = new MainRepository(this);

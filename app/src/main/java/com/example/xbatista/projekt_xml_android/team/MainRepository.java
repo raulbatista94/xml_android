@@ -88,4 +88,14 @@ public class MainRepository {
 
     }
 
+    public int delete(Team team) {
+        SQLiteDatabase db = mainOpenHelper.getWritableDatabase();
+        try {
+            return db.delete(Team.TABLE, Team.ID + " = " + team.getId(), null);
+        } finally {
+            db.close();
+        }
+
+    }
+
 }

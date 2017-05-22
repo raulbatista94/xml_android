@@ -4,10 +4,13 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,7 +20,10 @@ import com.example.xbatista.projekt_xml_android.team.TeamAdapter;
 
 public class MainActivity extends ListActivity {
 
+
+
     private MainRepository repository;
+    private Team team;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +35,7 @@ public class MainActivity extends ListActivity {
 
     //LIST VIEW
         setListAdapter(new TeamAdapter(this));
+
     }
 
     @Override
@@ -49,6 +56,9 @@ public class MainActivity extends ListActivity {
         i.putExtra(TeamActivity.EXTRA_TEAM_ID,id);
         startActivity(i);
     }
+
+
+
 
 
     @Override

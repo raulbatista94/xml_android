@@ -2,12 +2,8 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:enabled="true"
-        android:icon="@android:drawable/ic_menu_save"
-        android:onClick="saveTeam"
-        android:showAsAction=""
         android:title="Save"
-        android:visible="true"
-        app:showAsAction="always" />
-
+        android:icon="@android:drawable/ic_menu_save"
+        android:showAsAction="always"
+        android:onClick="saveTeam" />
 </menu>

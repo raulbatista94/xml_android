@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:actionViewClass="@string/app_name"
         android:enabled="true"
         android:icon="@android:drawable/ic_input_add"
         android:onClick="addTeam"
