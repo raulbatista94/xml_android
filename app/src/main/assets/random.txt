@@ -1,0 +1,123 @@
+Elephant
+Turtle
+Car
+Sound
+Piano
+Diamond
+Poop
+Fly(Animal)
+Dragon
+Mouse
+Horse
+Bee
+Baker
+Tail
+Playstation
+Disc
+Tape
+Web
+Web-Designer
+Armor
+Nature
+Box
+Chicken
+Bra
+Butter
+Butterfly
+Baby
+Mother
+Juice
+Tequila
+Brother
+Keyboard
+Processor
+Nurse
+Injection
+Blood
+Vampire
+Kiss
+Ninja
+Sea
+Sun
+Moon
+Wood
+Weed
+Cigaret
+Pokemon
+Mobile
+Network
+Transmiter
+Drugs
+Medicine
+Pen
+Condom
+Dollar
+Euro
+Database
+Water
+Oxygen
+Supply
+Electricity
+Town
+Knife
+Spoon
+Drunk father
+University
+Tortilla
+Tacos
+Gyros
+Spinning
+Bicycle
+Bottle
+Paper
+Lamp
+Light
+Sky
+Cloud
+USB Flash Drive
+Car crash
+Plane fall
+Heart attack
+God
+Flower
+Frozen human
+Broken screen
+Globalization
+Suicide Mission
+James Bond
+Harry Potter
+Griffindor
+Invisible problem
+Coconut
+Kinder Surprise
+Facebook
+iPhone
+Credit Card
+Company
+Towel
+Camp
+Cow
+Image
+Focus
+Stick
+Schdeule
+Pineapple
+Apple
+Orange
+Engine
+Wheel
+Duck-face
+Cat
+Dog
+Donut
+Homer Simpson
+Dancefloor
+Flower
+Graph
+Number
+
+
+
+
+
+

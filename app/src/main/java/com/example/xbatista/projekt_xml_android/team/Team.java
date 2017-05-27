@@ -22,6 +22,8 @@ public class Team {
     public Team(String name){
         this.values = new ContentValues();
         this.setName(name);
+        this.setRound(0);
+        this.setScore(0);
     }
 
     protected Team(Cursor cursor){
