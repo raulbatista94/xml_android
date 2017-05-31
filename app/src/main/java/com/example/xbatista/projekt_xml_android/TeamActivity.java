@@ -59,9 +59,6 @@ public class TeamActivity extends Activity {
                 case R.id.stop_counter :
                     stop();
                     break;
-                case R.id.delete :
-                    delete();
-                    break;
                 case R.id.correct :
                     correct();
                     break;
@@ -159,10 +156,6 @@ public class TeamActivity extends Activity {
 
 
 
-    private void delete() {
-        repository.delete(team);
-        finish();
-    }
 
 
 
