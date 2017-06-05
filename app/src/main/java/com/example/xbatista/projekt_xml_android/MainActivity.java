@@ -4,9 +4,11 @@ import android.animation.ObjectAnimator;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -26,13 +28,12 @@ import com.example.xbatista.projekt_xml_android.team.TeamAdapter;
 
 import static android.R.attr.id;
 
-public class MainActivity extends ListActivity {
+public class MainActivity extends ListActivity implements View.OnClickListener{
 
 
 
     private MainRepository repository;
     private Team team;
-    Button delete_team;
     LinearLayout layout;
 
 
@@ -45,9 +46,9 @@ public class MainActivity extends ListActivity {
         //setContentView(R.layout.team_row);
 
 
-    //LIST VIEW
+
+        //LIST VIEW
         setListAdapter(new TeamAdapter(this));
-        delete_team = (Button) findViewById(R.id.delete_team);
 
 
     }
@@ -77,5 +78,11 @@ public class MainActivity extends ListActivity {
     public  void onResume(){
         super.onResume();
         setListAdapter(new TeamAdapter(this));
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent i = new Intent(this, CreateTeam.class);
+        startActivity(i);
     }
 }

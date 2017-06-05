@@ -58,7 +58,6 @@ public class TeamAdapter extends CursorAdapter {
         ViewHolder viewHolder = new ViewHolder();
         viewHolder.name = (TextView)view.findViewById(R.id.name);
         viewHolder.score = (TextView)view.findViewById(R.id.score);
-        viewHolder.delete_button = (Button)view.findViewById(R.id.delete_team);
 
         view.setTag(viewHolder); // ukazatel ulozeny do znacky
         return view;
@@ -72,24 +71,14 @@ public class TeamAdapter extends CursorAdapter {
         viewHolder.name.setText(team.getName());
         viewHolder.score.setText("Score: " + String.valueOf(team.getScore()) + "ID:" + team.getId());
 
-        //final long teamId = team.getId();
-        viewHolder.delete_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "Button click");
-                repository.delete(team);
-                cursor.requery();
-                notifyDataSetChanged();
             }
-        });
 
-    }
 
     private static class ViewHolder {
 
         public TextView name;
         public TextView score;
-        public Button delete_button;
 
     }
+
 }

@@ -1,9 +1,16 @@
 package com.example.xbatista.projekt_xml_android;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +28,9 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.List;
@@ -34,8 +43,8 @@ import java.util.List;
 public class TeamActivity extends Activity {
 
 
-
-    Button start_button, stop_button, delete_button, correct_button, incorrect_button, button3, button4, button5;
+    private static final String TAG = "PHOTO" ;
+    Button start_button, stop_button, delete_button, correct_button, incorrect_button, button3, button4, button5, hide, show, camera;
     TextView timer_id;
     TextView idView;
     TextView teamName;
@@ -46,7 +55,11 @@ public class TeamActivity extends Activity {
     private Team team;
     private long pauseValue = 0;
     private CountDownTimer countDownTimer;
-    private String myData;
+    private String myData, actual_activity;
+    private String[] activity = {"Draw", "Describe", "Pantomime"};
+    private File imageFile = null;
+    private static final int CONTENT_REQUEST=1337;
+
 
 
     private View.OnClickListener btnClickListener = new View.OnClickListener() {
@@ -65,6 +78,19 @@ public class TeamActivity extends Activity {
                 case R.id.incorrect :
                     incorrect();
                     break;
+                case R.id.delete :
+                    delete();
+                    break;
+                case R.id.show :
+                    show_word();
+                    break;
+                case R.id.hide :
+                    hide_word();
+                    break;
+                case R.id.camera_button :
+                    dispatchTakePictureIntent();
+                    break;
+
             }
         }
     };
@@ -100,6 +126,7 @@ public class TeamActivity extends Activity {
             }
             String[] myWords = lines.toArray(new  String[0]);
             myData = (myWords[new Random().nextInt(myWords.length)]);
+            actual_activity = (activity[new Random().nextInt(activity.length)]);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -128,10 +155,20 @@ public class TeamActivity extends Activity {
         correct_button.setOnClickListener(btnClickListener);
         incorrect_button = (Button) findViewById(R.id.incorrect);
         incorrect_button.setOnClickListener(btnClickListener);
+        hide = (Button) findViewById(R.id.hide);
+        hide.setOnClickListener(btnClickListener);
+        show = (Button) findViewById(R.id.show);
+        show.setOnClickListener(btnClickListener);
         start_button.setVisibility(View.VISIBLE);
         stop_button.setVisibility(View.INVISIBLE);
         guessWord.setVisibility(View.INVISIBLE);
         timer_id.setVisibility(View.INVISIBLE);
+        hide.setVisibility(View.INVISIBLE);
+        show.setVisibility(View.INVISIBLE);
+        camera = (Button) findViewById(R.id.camera_button);
+        camera.setOnClickListener(btnClickListener);
+        camera.setVisibility(View.INVISIBLE);
+
 
 
 
@@ -144,7 +181,7 @@ public class TeamActivity extends Activity {
             team = repository.getById(teamId);
 
             idView.setText(Long.toString(teamId));
-            teamName.setText(team.getName());
+            teamName.setText(team.getName() + " your activitity is: " + actual_activity);
             guessWord.setText(myData);
             System.out.print(myData);
 
@@ -154,7 +191,28 @@ public class TeamActivity extends Activity {
 
     }
 
+    private void delete(){
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setMessage("Do you want to delete? ");
+        dialog.setCancelable(false);
 
+        dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                repository.delete(team);
+                finish();
+                }
+        });
+
+        dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+
+            }
+    });
+        dialog.create().show();
+    }
 
 
 
@@ -165,6 +223,11 @@ public class TeamActivity extends Activity {
         button5.setVisibility(View.INVISIBLE);
         guessWord.setVisibility(View.VISIBLE);
         timer_id.setVisibility(View.VISIBLE);
+        hide.setVisibility(View.VISIBLE);
+        if (actual_activity == "Draw") {
+            camera.setVisibility(View.VISIBLE);
+        }
+
         possible_points = 3;
 
     }
@@ -175,6 +238,11 @@ public class TeamActivity extends Activity {
         button5.setVisibility(View.INVISIBLE);
         guessWord.setVisibility(View.VISIBLE);
         timer_id.setVisibility(View.VISIBLE);
+        hide.setVisibility(View.VISIBLE);
+        if (actual_activity == "Draw") {
+            camera.setVisibility(View.VISIBLE);
+        }
+
         possible_points = 4;
 
     }
@@ -185,6 +253,11 @@ public class TeamActivity extends Activity {
         button5.setVisibility(View.INVISIBLE);
         guessWord.setVisibility(View.VISIBLE);
         timer_id.setVisibility(View.VISIBLE);
+        hide.setVisibility(View.VISIBLE);
+        if (actual_activity == "Draw") {
+            camera.setVisibility(View.VISIBLE);
+        }
+
         possible_points = 5;
 
     }
@@ -261,4 +334,49 @@ public class TeamActivity extends Activity {
         }
     }
 
+
+    private void show_word() {
+        hide.setVisibility(View.VISIBLE);
+        show.setVisibility(View.INVISIBLE);
+        guessWord.setVisibility(View.VISIBLE);
+    }
+
+    private void hide_word() {
+        hide.setVisibility(View.INVISIBLE);
+        show.setVisibility(View.VISIBLE);
+        guessWord.setVisibility(View.INVISIBLE);
+    }
+
+
+
+
+
+    private void dispatchTakePictureIntent() {
+
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File pictureDirectiory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+
+        imageFile = new File(pictureDirectiory, "Picture");
+        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imageFile) );
+
+        startActivityForResult(takePictureIntent, CONTENT_REQUEST);
+    }
+
+    /*private String getPictureName(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+       String timeStamp =  sdf.format(new Date());
+        return "Activity_Photo_" + timeStamp + ".jpg";
+    }*/
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CONTENT_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Intent takePictureIntent = new Intent(Intent.ACTION_VIEW);
+                takePictureIntent.setDataAndType(Uri.fromFile(imageFile), "image/jpeg");
+                startActivity(takePictureIntent);
+                finish();
+            }
+        }
+    }
 }
