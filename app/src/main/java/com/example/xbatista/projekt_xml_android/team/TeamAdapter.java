@@ -7,21 +7,29 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CursorAdapter;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.example.xbatista.projekt_xml_android.R;
+
+import static android.content.ContentValues.TAG;
+import static java.lang.Long.valueOf;
 
 
 /**
  * Created by xbatista on 18/05/2017.
  */
 
-public class TeamAdapter extends CursorAdapter{
+public class TeamAdapter extends CursorAdapter {
+    //private MainRepository repository;
+    private Team team;
 
     public TeamAdapter(Context context) {
         super(context, openCursor(context), true);
@@ -40,7 +48,6 @@ public class TeamAdapter extends CursorAdapter{
         );
 
 
-
     }
 
 
@@ -50,27 +57,36 @@ public class TeamAdapter extends CursorAdapter{
         View view = inflanter.inflate(R.layout.team_row, null, true);
 
         ViewHolder viewHolder = new ViewHolder();
-        viewHolder.name = (TextView) view.findViewById(R.id.name);
-        viewHolder.score = (TextView) view.findViewById(R.id.score);
+        viewHolder.name = (TextView)view.findViewById(R.id.name);
+        viewHolder.score = (TextView)view.findViewById(R.id.score);
+        viewHolder.green = (ImageView) view.findViewById(R.id.imageGreen);
 
         view.setTag(viewHolder); // ukazatel ulozeny do znacky
         return view;
     }
 
     @Override
-    public void bindView(View view, Context context, Cursor cursor) {
-        Team team = new Team(cursor);
-        ViewHolder viewHolder = (ViewHolder) view.getTag(); // vytahujem z ukazatela
+    public void bindView(View view, Context context, final Cursor cursor) {
+        final Team team = new Team(cursor);
+        ViewHolder viewHolder = (ViewHolder)view.getTag(); // vytahujem z ukazatela
 
         viewHolder.name.setText(team.getName());
-        viewHolder.score.setText(String.valueOf(team.getScore()));
+        viewHolder.score.setText("Score: " + String.valueOf(team.getScore()) + "/60");
+        if (Integer.parseInt(team.getScore()) == 60) {
+            viewHolder.green.setVisibility(View.VISIBLE);
+        }else{
+            viewHolder.green.setVisibility(View.INVISIBLE);
+        }
 
-    }
+            }
+
 
     private static class ViewHolder {
 
         public TextView name;
         public TextView score;
+        public ImageView green;
 
     }
+
 }

@@ -4,9 +4,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by xbatista on 18/05/2017.
@@ -88,10 +91,11 @@ public class MainRepository {
 
     }
 
-    public int delete(Team team) {
+    public void delete(Team team) {
         SQLiteDatabase db = mainOpenHelper.getWritableDatabase();
         try {
-            return db.delete(Team.TABLE, Team.ID + " = " + team.getId(), null);
+            Log.d(TAG, "ID ready for delete is: " + team.getScore());
+            db.delete(Team.TABLE, Team.ID + " = " + team.getId(), null);
         } finally {
             db.close();
         }
